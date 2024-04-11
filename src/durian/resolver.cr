@@ -215,7 +215,7 @@ class Durian::Resolver
     Tuple.new fetch_list.type, ip_address
   end
 
-  def self.get_tcp_socket!(host : String, port : Int32, resolver : Resolver, connect_timeout : Int | Float? = nil) : ::TCPSocket
+  def self.get_tcp_socket!(host : String, port : Int32, resolver : Resolver, connect_timeout : Time::Span? = nil) : ::TCPSocket
     fetch_list = getaddrinfo_all host, port, resolver
     raise Socket::Error.new "DNS query result IP is empty, or DNS query failed" if fetch_list.empty?
 
@@ -232,7 +232,7 @@ class Durian::Resolver
     raise Socket::Error.new "Connection refused for all IP addresses"
   end
 
-  def self.get_udp_socket!(host : String, port : Int32, resolver : Resolver, connect_timeout : Int | Float? = nil) : ::UDPSocket
+  def self.get_udp_socket!(host : String, port : Int32, resolver : Resolver, connect_timeout : Time::Span? = nil) : ::UDPSocket
     fetch_list = getaddrinfo_all host, port, resolver
     raise Socket::Error.new "DNS query result IP is empty, or DNS query failed" unless first = fetch_list.first?
 
